@@ -17,7 +17,8 @@ config = {
     'ndf': 16,
     'nzf': 100,
     'optimizer': 'sgd',
-    'lr': 0.01,
+    'lr_D': 0.01,
+    'lr_G': 0.01,
     'momentum': 0.9,
     'nestrov': False,
     'lr_schedule': None,
@@ -50,15 +51,18 @@ create optimizer & lr schedule
 TTL
 '''
 # filter 使用方式
+# filter(function, iterable):
+# function: 判斷函數
+# iterable: 可迭代對象
 optimizerD = None
 optimizerG = None
 if config['optimizer'] == 'sgd':
     optimizerD = SGD(params=filter(lambda p: p.requires_grad, netD.parameters()),
-                     lr=config['lr'],
+                     lr=config['lr_D'],
                      momentum=config['momentum'],
                      nesterov=config['nestrov'])
     optimizerG = SGD(params=filter(lambda p: p.requires_grad, netG.parameters()),
-                     lr=config['lr'],
+                     lr=config['lr_G'],
                      momentum=config['momentum'],
                      nesterov=config['nestrov'])
 
